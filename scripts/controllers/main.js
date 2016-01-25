@@ -1,3 +1,4 @@
+'user strict'
 /**
  * @ngdoc function
  * @name canvasApp.controller:MainCtrl
@@ -15,18 +16,17 @@ angular.module('canvasApp')
 
     //User weekly activity per repository
     console.log('https://api.github.com/repos/dherre3/MUHCMobileApp/stats/commit_activity');
-
     $scope.getUserActivity=function()
     {
-      console.log($scope.username);
-      githubApi.getUserRepositories($scope.username).success(function(response)
+      /*githubApi.getUserRepositories($scope.username).success(function(response)
       {
         $scope.repositories=response.data;
+        console.log(response.data);
         var namesRepoArray=getListOfRepositoryNames(response.data);
         githubApi.getUserRepositoriesActivity($scope.username, namesRepoArray).then(function(response){
           console.log(response);
         });
-      });
+      });*/
     }
     var getListOfRepositoryNames=function(array)
     {
@@ -34,8 +34,10 @@ angular.module('canvasApp')
       for (var i = 0; i < array.length; i++) {
         responseArray.push(array[i].name);
       }
+      console.log(responseArray);
       return responseArray;
     }
+
     $('#container').highcharts({
         chart: {
 
@@ -51,59 +53,22 @@ angular.module('canvasApp')
         title:{
           text:'Github Activity'
         },
-        xAxis: {
-          lineWidth: 0,
-          minorGridLineWidth: 0,
-          lineColor: 'transparent',
-          labels: {
-              enabled: false
-          },
-          minorTickLength: 0,
-          tickLength: 0
-          },
-        yAxis:{
-          lineWidth: 0,
-          minorGridLineWidth: 0,
-          lineColor: 'transparent',
-          labels: {
-              enabled: false
-          },
-          minorTickLength: 0,
-          tickLength: 0
-        },
+
         plotOptions: {
             column: {
                 depth: 40,
-                stacking: false,
+                stacking: true,
                 grouping: false,
                 groupZPadding: 20
             }
         },
         series: [{
-            data: [1, 2, 4, 3, 2, 4],
+            data: [{y:1,color:'#d6e685'}, {y:2,color:'#8cc665'}, 4, 3, 2, 4],
             stack: 0
         }, {
             data: [5, 6, 3, 4, 1, 2],
             stack: 1
-        }, {
-            data: [7, 9, 8, 7, 5, 8],
-            stack: 2
-        },
-        {
-            data: [1, 2, 4, 3, 2, 4],
-            stack: 3
-        }, {
-            data: [5, 6, 3, 4, 1, 2],
-            stack: 4
-        }, {
-            data: [7, 9, 8, 7, 5, 8],
-            stack: 5
-        },{
-            data: [1, 2, 4, 3, 2, 4],
-            stack: 6
-        }, {
-            data: [5, 6, 3, 4, 1, 2],
-            stack: 7
         }]
     });
   }]);
+  //colors: ['#d6e685', '#8cc665', '#44a340','#1e6823','#eee'],

@@ -1,5 +1,7 @@
 var myApp=angular.module('canvasApp');
 myApp.service('githubApi',['$http','$q',function($http,$q){
+  var username='';
+  var repoNames='';
   var runUserRequest=function(username)
   {
     return $http({method:'JSONP',url:'https://api.github.com/users/'+username+'/repos?callback=JSON_CALLBACK' });
