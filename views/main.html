@@ -19,10 +19,27 @@
 
 
       </div>
-
-
-
     </div>
   </div>
+
   <div id="container" style="height: 600px"></div>
+  <table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Repository Name</th>
+          <th>Owner</th>
+          <th>Repository Url</th>
+          <th data-field="name" data-sortable="true">Total Number of Commits</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="repository in repositories">
+        <td>{{repository.full_name}}</td>
+        <td><img class="img-circle" style="width:40px;height:auto" ng-src="{{repository.owner.avatar_url}}">{{repository.owner.login}}</td>
+        <td><a ng-click="openLink()">{{repository.html_url}}</a></td>
+        <td>2</td>
+      </tr>
+      </tbody>
+</table>
 </div>

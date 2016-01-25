@@ -7,7 +7,7 @@
  * Controller of the canvasApp
  */
 angular.module('canvasApp')
-  .controller('MainCtrl', ['$scope','githubApi',function ($scope,githubApi) {
+  .controller('MainCtrl', ['$scope','githubApi','$timeout',function ($scope,githubApi,$timeout) {
     //Enter user, look for user repositories, once repository picked get commit activity per week
 
     //User Public repositories per week
@@ -27,6 +27,18 @@ angular.module('canvasApp')
           console.log(response);
         });
       });*/
+      $timeout(function(){
+        $scope.repositoryNames=JSON.parse(window.localStorage.getItem('dherre3NameRepos'));
+        $scope.repositories=JSON.parse(window.localStorage.getItem('dherre3Repos'));
+        $scope.repositoryActivity=JSON.parse(window.localStorage.getItem('dherre3RepoActivity'));
+        console.log($scope.repositoryNames);
+        console.log($scope.repositories);
+        console.log($scope.repositoryActivity);
+      })
+
+
+
+
     }
     var getListOfRepositoryNames=function(array)
     {
