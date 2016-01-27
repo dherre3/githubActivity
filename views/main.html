@@ -1,6 +1,6 @@
 
 
-<div class="row-fluid">
+<div>
 
   <div class="container">
     <div class="col-xs-12">
@@ -23,14 +23,16 @@
   </div>
 
   <div id="container" style="height: 500px;width:1000px"></div>
-  <table>
-    <table class="table table-striped">
+  <div class="container" align="center">
+    <button class="btn btn-primary"ng-click="graphAllRepositories()">Graph All My Commits</button>
+  </div>
+    <table align="center" class="table table-striped">
       <thead>
         <tr>
           <th>Repository Name</th>
           <th>Owner</th>
           <th>Repository Url</th>
-          <th data-field="name" data-sortable="true">Total Number of Commits</th>
+          <th>Graph</th>
         </tr>
       </thead>
       <tbody>
@@ -38,7 +40,7 @@
         <td>{{repository.full_name}}</td>
         <td><img class="img-circle" style="width:40px;height:auto" ng-src="{{repository.owner.avatar_url}}">{{repository.owner.login}}</td>
         <td><a ng-click="openLink()">{{repository.html_url}}</a></td>
-        <td>2</td>
+        <td><button class="btn btn-primary"ng-click="graphRepository($index)">Graph My Commits</button></td>
       </tr>
       </tbody>
 </table>
