@@ -49,11 +49,16 @@ angular.module('canvasApp')
       {
         
         cleanGraph();
-        var array=prepareAllRepositories();
+        var array=filter();
+        var array=prepareAllRepositories(array);
         prepareGraphRepository(array);
         var chart=$('#container').highcharts();
         chart.redraw()
 
+      }
+      function filter()
+      {
+        return $scope.repositoryActivity; 
       }
       function cleanGraph()
       {
@@ -122,7 +127,6 @@ angular.module('canvasApp')
     {      
       var transpose=transposeArray(totalArray);
       var dateArray=transposeDateArray(totalArray);
-      console.log(transpose);
       var highchartsArray=prepareSeries(transpose, dateArray);
       console.log(highchartsArray);
       var chart = $('#container').highcharts();
@@ -143,20 +147,19 @@ angular.module('canvasApp')
 
     }
 
-    function prepareAllRepositories()
+    function prepareAllRepositories(array)
     {
-      var totalArray=initializeTotalArray($scope.repositoryActivity.length);
-      for (var i = 0; i < $scope.repositoryActivity.length; i++) {
+      var totalArray=initializeTotalArray(array.length);
+      for (var i = 0; i < array.length; i++) {
         //$scope.repositoryActivity[i]=$scope.repositoryActivity[i].data.data;
         for (var j = 0; j < 52; j++) {
-            var dateObject=new Date($scope.repositoryActivity[i][j].week*1000);
+            var dateObject=new Date(array[i][j].week*1000);
             totalArray[j].date=new Date(dateObject.setDate(dateObject.getDate()+1));
-            console.log(totalArray[j].date);
             if(totalArray[j].date.getMonth()==8&&i==13)
             {
               console.log(totalArray[j]);
             }
-            totalArray[j].days=addTwoArrays(totalArray[j].days,$scope.repositoryActivity[i][j].days);
+            totalArray[j].days=addTwoArrays(totalArray[j].days,array[i][j].days);
           }
       };
       return totalArray;
@@ -169,11 +172,17 @@ angular.module('canvasApp')
       for (var v = 0; v < 52; v++) {
         var dateObject=new Date($scope.repositoryActivity[repoNumber][v].week*1000);
         $scope.repositoryActivity[repoNumber][v].date=new Date(dateObject.setDate(dateObject.getDate()+1));
-        console.log($scope.repositoryActivity[repoNumber][v].date);
-        console.log($scope.repositoryActivity[repoNumber][v].days);
-
       };
       return totalArray;
+    }
+    function OnlyforkRepos(val)
+    {
+      if(val)
+      {
+
+      }else{
+
+      }
     }
 
     function prepareSeries(tranpose, transposeName)
@@ -283,6 +292,26 @@ angular.module('canvasApp')
       }
       console.log(responseArray);
       return responseArray;
+    }
+    function copyRepositoriesObjectArray(array)
+    {
+      var names=[];
+      for (var i = 0; i < array.length; i++) {
+        for (var key in array[i]) {
+          var object={};
+          object[key]=array[i][key];
+          names.push(object);
+        };
+        array[i]
+      };
+    }
+    function copyArrayNames(array)
+    {
+      var names=[];
+      for (var i = 0; i < array.length; i++) {
+        names[i]=array[i];
+      };
+      return names;
     }
 
     $('#container').highcharts({

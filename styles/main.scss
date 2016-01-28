@@ -50,6 +50,7 @@ body {
 .container-narrow > hr {
   margin: 30px 0;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 /* Main marketing message and sign up button */
 .jumbotron {
@@ -89,4 +90,13 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+.div-graph-container
+{
+  padding:10px;
+  background-color:#f5f5f5;
+  border:2px solid lightgrey;
+  border-radius:4px;
+  height:550px;
+  width:100%;
 }

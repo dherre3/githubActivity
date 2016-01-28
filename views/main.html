@@ -1,47 +1,91 @@
-
-
 <div>
-
-  <div class="container">
-    <div class="col-xs-12">
-      
-          <div class="row">
-            <div class="col-xs-4">
-              <label>Enter your Github username:</label>
-
+    <div class="container-fluid">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-4" align="right">
+                    <label>Enter your Github username:</label>
+                </div>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" ng-model="username">
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-success" ng-click="getUserActivity()">Get Activity!</button>
+                </div>
             </div>
-            <div class="col-xs-4">
-              <input type="text" class="form-control" ng-model="username">
-            </div>
-            <div class="col-xs-4">
-              <button class="btn btn-success" ng-click="getUserActivity()">Get Activity!</button>
-            </div>
-
-
-      </div>
+        </div>
     </div>
-  </div>
-
-  <div id="container" style="height: 500px;width:1000px"></div>
-  <div class="container" align="center">
-    <button class="btn btn-primary"ng-click="graphAllRepositories()">Graph All My Commits</button>
-  </div>
-    <table align="center" class="table table-striped">
-      <thead>
-        <tr>
-          <th>Repository Name</th>
-          <th>Owner</th>
-          <th>Repository Url</th>
-          <th>Graph</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="repository in repositories">
-        <td>{{repository.full_name}}</td>
-        <td><img class="img-circle" style="width:40px;height:auto" ng-src="{{repository.owner.avatar_url}}">{{repository.owner.login}}</td>
-        <td><a ng-click="openLink()">{{repository.html_url}}</a></td>
-        <td><button class="btn btn-primary"ng-click="graphRepository($index)">Graph My Commits</button></td>
-      </tr>
-      </tbody>
-</table>
+    <div ng-show="!emptyGraph">
+        <div class="container-fluid text-center " style="margin-top:20px">
+            <div class="col-xs-12 col-sm-4">
+                <button class="btn btn-primary" ng-click="graphAllRepositories()">Graph All My Commits</button>
+            </div>
+            <div class="col-sm-6 col-xs-12 " align="center">
+                <uib-accordion>
+                    <uib-accordion-group is-open="status.open">
+                        <uib-accordion-heading>
+                            Filters <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        </uib-accordion-heading>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="fork" ng-change="getMyRepos()"> Repositories owned by me
+                            </label>
+                        </div>
+                    </uib-accordion-group>
+                </uib-accordion>
+            </div>
+        </div>
+        <div class="div-graph-container">
+            <div class="row-fluid">
+                <div>
+                    <label>Repository Name</label>
+                </div>
+                <div class="col-xs-12 col-sm-4" style="height:500px;overflow-y:scroll">
+                    <table class="table  table-bordered">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="repository in repositories">
+                                <td>{{repository.full_name}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" ng-click="graphRepository($index)">Graph My Commits</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                    <div id="container" style="height:500px;width:100%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" style="margin-top:20px">
+            <uib-accordion>
+                <uib-accordion-group is-open="status.open">
+                    <uib-accordion-heading>
+                        Repository details <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <table align="center" class="table table-striped" style="width:100%;margin-top:20px">
+                        <thead>
+                            <tr>
+                                <th>Repository Name</th>
+                                <th>Owner</th>
+                                <th>Repository Url</th>
+                                <th>Graph</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="repository in repositories">
+                                <td>{{repository.full_name}}</td>
+                                <td><img class="img-circle" style="width:40px;height:auto" ng-src="{{repository.owner.avatar_url}}">{{repository.owner.login}}</td>
+                                <td><a ng-click="openLink()">{{repository.html_url}}</a></td>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="graphRepository($index)">Graph My Commits</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </uib-accordion-group>
+            </uib-accordion>
+        </div>
+    </div>
 </div>
